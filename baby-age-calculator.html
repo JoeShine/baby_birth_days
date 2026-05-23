@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宝 宝 天 数 计 算 器</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: #FFE74C;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-image:
+      radial-gradient(circle, #FF6B6B 2px, transparent 2px),
+      radial-gradient(circle, #4ECDC4 3px, transparent 3px),
+      radial-gradient(circle, #45B7D1 2px, transparent 2px);
+    background-size: 80px 80px, 120px 120px, 100px 100px;
+    background-position: 0 0, 40px 30px, 20px 60px;
+  }
+
+  .container {
+    max-width: 600px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* ── 标题卡片 ── */
+  .title-card {
+    background: #fff;
+    border: 4px solid #000;
+    box-shadow: 8px 8px 0 #000;
+    padding: 28px 24px;
+    text-align: center;
+    transform: rotate(-0.5deg);
+  }
+  .title-card .emoji-row {
+    font-size: 48px;
+    letter-spacing: 8px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .title-card h1 {
+    font-size: 36px;
+    font-weight: 900;
+    color: #000;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── 输入卡片 ── */
+  .input-card {
+    background: #4ECDC4;
+    border: 4px solid #000;
+    box-shadow: 8px 8px 0 #000;
+    padding: 28px 24px;
+    transform: rotate(0.5deg);
+  }
+  .input-card label {
+    display: block;
+    font-size: 18px;
+    font-weight: 900;
+    color: #000;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+  .input-card input[type="date"] {
+    width: 100%;
+    padding: 16px;
+    font-size: 22px;
+    font-weight: 900;
+    font-family: 'Noto Sans SC', sans-serif;
+    text-align: center;
+    border: 4px solid #000;
+    box-shadow: 6px 6px 0 #000;
+    background: #fff;
+    color: #000;
+    outline: none;
+    transition: box-shadow 0.15s, transform 0.15s;
+    cursor: pointer;
+  }
+  .input-card input[type="date"]:focus {
+    box-shadow: 3px 3px 0 #000;
+    transform: translate(3px, 3px);
+  }
+
+  /* ── 结果卡片 ── */
+  .results {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .result-card {
+    background: #fff;
+    border: 4px solid #000;
+    box-shadow: 8px 8px 0 #000;
+    padding: 28px 20px;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  .result-card:hover {
+    transform: translate(-2px, -2px);
+  }
+  .result-card.days {
+    background: #FF6B6B;
+    transform: rotate(-1deg);
+  }
+  .result-card.days:hover {
+    transform: rotate(-1deg) translate(-2px, -2px);
+  }
+  .result-card.months {
+    background: #45B7D1;
+    transform: rotate(1deg);
+  }
+  .result-card.months:hover {
+    transform: rotate(1deg) translate(-2px, -2px);
+  }
+  .result-card .label {
+    font-size: 16px;
+    font-weight: 900;
+    color: #000;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .result-card .label .icon {
+    font-size: 28px;
+    line-height: 1;
+  }
+  .result-card .value {
+    font-size: 64px;
+    font-weight: 900;
+    color: #000;
+    line-height: 1;
+    letter-spacing: -2px;
+    text-shadow: 3px 3px 0 rgba(0,0,0,0.15);
+  }
+  .result-card .unit {
+    font-size: 22px;
+    font-weight: 900;
+    color: #000;
+    margin-top: 4px;
+  }
+  .result-card .sub {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+    margin-top: 4px;
+    opacity: 0.7;
+  }
+
+  /* ── 里程碑卡片 ── */
+  .milestone-card {
+    background: #fff;
+    border: 4px solid #000;
+    box-shadow: 8px 8px 0 #000;
+    padding: 24px;
+  }
+  .milestone-card h3 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #000;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+  .milestone-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .milestone-item {
+    background: #FFE74C;
+    border: 3px solid #000;
+    box-shadow: 4px 4px 0 #000;
+    padding: 14px 10px;
+    text-align: center;
+    font-weight: 900;
+    color: #000;
+    transition: background 0.2s, box-shadow 0.15s, transform 0.15s;
+  }
+  .milestone-item.reached {
+    background: #FF6B6B;
+    color: #fff;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  }
+  .milestone-item .milestone-days {
+    font-size: 11px;
+    font-weight: 700;
+    color: #555;
+    margin-top: 4px;
+  }
+  .milestone-item.reached .milestone-days {
+    color: rgba(255,255,255,0.8);
+  }
+
+  /* ── 贴纸装饰 ── */
+  .sticker {
+    position: fixed;
+    pointer-events: none;
+    z-index: 10;
+    font-size: 52px;
+    opacity: 0.85;
+  }
+  .sticker-1 { top: 5%; left: 5%; transform: rotate(-10deg); }
+  .sticker-2 { top: 10%; right: 5%; transform: rotate(15deg); }
+  .sticker-3 { bottom: 8%; left: 8%; transform: rotate(-5deg); }
+  .sticker-4 { bottom: 12%; right: 6%; transform: rotate(8deg); }
+  .sticker-5 { bottom: 5%; left: 50%; transform: rotate(-12deg); }
+
+  @media (max-width: 480px) {
+    .result-card .value { font-size: 42px; }
+    .title-card h1 { font-size: 26px; }
+    .results { gap: 12px; }
+    .milestone-grid { grid-template-columns: 1fr 1fr; }
+    .sticker { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 浮动装饰 -->
+<div class="sticker sticker-1">🍼</div>
+<div class="sticker sticker-2">⭐</div>
+<div class="sticker sticker-3">🧸</div>
+<div class="sticker sticker-4">🌈</div>
+<div class="sticker sticker-5">👶</div>
+
+<div class="container">
+
+  <!-- 标题 -->
+  <div class="title-card">
+    <div class="emoji-row">👶 🍼 ✨</div>
+    <h1>宝 宝 天 数 计 算 器</h1>
+  </div>
+
+  <!-- 输入区 -->
+  <div class="input-card">
+    <label for="birthdate">📅 请选择宝宝的出生日期</label>
+    <input type="date" id="birthdate" max="" />
+  </div>
+
+  <!-- 结果区 -->
+  <div class="results">
+    <div class="result-card days">
+      <div class="label"><span class="icon">📆</span> 出生天数</div>
+      <div class="value" id="daysValue">—</div>
+      <div class="unit">天</div>
+      <div class="sub" id="weeksSub"></div>
+    </div>
+    <div class="result-card months">
+      <div class="label"><span class="icon">📏</span> 宝宝月龄</div>
+      <div class="value" id="monthsValue">—</div>
+      <div class="unit">个月</div>
+      <div class="sub" id="yearMonthSub"></div>
+    </div>
+  </div>
+
+  <!-- 里程碑 -->
+  <div class="milestone-card">
+    <h3>🎯 成长里程碑打卡</h3>
+    <div class="milestone-grid" id="milestoneGrid"></div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  const birthdateInput = document.getElementById('birthdate');
+  const daysValue = document.getElementById('daysValue');
+  const weeksSub = document.getElementById('weeksSub');
+  const monthsValue = document.getElementById('monthsValue');
+  const yearMonthSub = document.getElementById('yearMonthSub');
+  const milestoneGrid = document.getElementById('milestoneGrid');
+
+  // 设置最大日期为今天
+  const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
+  birthdateInput.setAttribute('max', todayStr);
+
+  // 里程碑定义
+  const milestones = [
+    { days: 0,    label: '出生日 🎂' },
+    { days: 30,   label: '满月 🌕' },
+    { days: 100,  label: '百天 💯' },
+    { days: 180,  label: '半岁 🎈' },
+    { days: 365,  label: '周岁 🎉' },
+    { days: 730,  label: '两岁 🎊' },
+  ];
+
+  function renderMilestones(currentDays) {
+    milestoneGrid.innerHTML = milestones.map(m => {
+      const reached = currentDays >= m.days;
+      const cls = reached ? 'milestone-item reached' : 'milestone-item';
+      return `<div class="${cls}">
+        <div>${m.label}</div>
+        <div class="milestone-days">${m.days} 天</div>
+      </div>`;
+    }).join('');
+  }
+
+  function updateDisplay() {
+    const val = birthdateInput.value;
+    if (!val) {
+      daysValue.textContent = '—';
+      weeksSub.textContent = '';
+      monthsValue.textContent = '—';
+      yearMonthSub.textContent = '';
+      renderMilestones(0);
+      return;
+    }
+
+    const birthDate = new Date(val + 'T00:00:00');
+    const now = new Date();
+    // 使用毫秒差来计算精确天数
+    const msDiff = now.getTime() - birthDate.getTime();
+    const daysDiff = Math.floor(msDiff / (1000 * 60 * 60 * 24));
+
+    // 天数
+    daysValue.textContent = daysDiff;
+    const weeks = Math.floor(daysDiff / 7);
+    const remDays = daysDiff % 7;
+    weeksSub.textContent = weeks > 0 ? `约 ${weeks} 周 ${remDays} 天` : '';
+
+    // 月龄精确计算
+    const monthDiff = daysDiff / 30.4375;
+    const fullMonths = Math.floor(monthDiff);
+    const decimalPart = Math.round((monthDiff - fullMonths) * 10) / 10;
+    monthsValue.textContent = monthDiff.toFixed(1);
+
+    // 年 + 月 + 天
+    const years = Math.floor(daysDiff / 365);
+    const remainingAfterYears = daysDiff % 365;
+    const remMonths = Math.floor(remainingAfterYears / 30.4375);
+    const remDaysFinal = remainingAfterYears - Math.floor(remMonths * 30.4375);
+
+    let dateStr = '';
+    if (years > 0) dateStr += `${years} 岁 `;
+    if (remMonths > 0) dateStr += `${remMonths} 个月 `;
+    dateStr += `${remDaysFinal} 天`;
+    yearMonthSub.textContent = dateStr.trim();
+
+    renderMilestones(daysDiff);
+  }
+
+  // 监听输入变化
+  birthdateInput.addEventListener('change', updateDisplay);
+  birthdateInput.addEventListener('input', updateDisplay);
+
+  // 如果有保存的日期，恢复
+  const saved = localStorage.getItem('baby_birthdate');
+  if (saved) {
+    birthdateInput.value = saved;
+    updateDisplay();
+  }
+
+  // 保存到 localStorage
+  birthdateInput.addEventListener('change', () => {
+    if (birthdateInput.value) {
+      localStorage.setItem('baby_birthdate', birthdateInput.value);
+    }
+  });
+
+  // 每秒更新一次（天数可能跨天变化）
+  setInterval(updateDisplay, 60 * 1000);
+
+  // 初始渲染
+  renderMilestones(0);
+})();
+</script>
+</body>
+</html>
