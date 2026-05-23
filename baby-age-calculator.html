@@ -17,49 +17,63 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
+    padding: 0;
     background-image:
-      radial-gradient(circle, #FF6B6B 2px, transparent 2px),
-      radial-gradient(circle, #4ECDC4 3px, transparent 3px),
-      radial-gradient(circle, #45B7D1 2px, transparent 2px);
-    background-size: 60px 60px, 90px 90px, 80px 80px;
-    background-position: 0 0, 30px 20px, 15px 45px;
+      radial-gradient(circle, #FF6B6B 3px, transparent 3px),
+      radial-gradient(circle, #4ECDC4 4px, transparent 4px),
+      radial-gradient(circle, #45B7D1 3px, transparent 3px);
+    background-size: 80px 80px, 120px 120px, 100px 100px;
+    background-position: 10px 10px, 50px 60px, 30px 30px;
   }
 
   .container {
-    max-width: 440px;
+    max-width: 480px;
     width: 100%;
+    height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    background: #FFE74C;
   }
 
-  /* ── 顶部徽章行 ── 极致压缩 */
+  /* ── 顶部区域 80px ── */
   .top-bar {
+    height: 80px;
+    min-height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    background: #FF6B6B;
+    border-bottom: 4px solid #000;
+    padding: 0 20px;
   }
-  .badge {
+  .top-bar .badge {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    background: #fff;
-    border: 3px solid #000;
-    box-shadow: 4px 4px 0 #000;
-    padding: 6px 14px;
-    font-size: 15px;
+    gap: 8px;
+    font-size: 20px;
     font-weight: 900;
-    color: #000;
-    letter-spacing: 1px;
+    color: #fff;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
   }
-  .badge.pink { background: #FF6B6B; color: #fff; text-shadow: 1px 1px 0 rgba(0,0,0,0.2); }
-  .badge.green { background: #4ECDC4; }
-  .badge.blue  { background: #45B7D1; color: #fff; text-shadow: 1px 1px 0 rgba(0,0,0,0.2); }
-  .badge .emoji { font-size: 18px; line-height: 1; }
+  .top-bar .badge .emoji {
+    font-size: 26px;
+    line-height: 1;
+  }
 
-  /* ── 输入卡片 ── 紧凑 */
+  /* ── 内容区 弹性撑满 ── */
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  /* ── 输入卡片 ── */
   .input-card {
     background: #4ECDC4;
     border: 4px solid #000;
@@ -67,16 +81,19 @@
     padding: 18px 20px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
   }
-  .input-card .icon-label {
-    font-size: 32px;
-    line-height: 1;
+  .input-card .input-label {
+    font-size: 16px;
+    font-weight: 900;
+    color: #000;
+    letter-spacing: 2px;
+    white-space: nowrap;
     flex-shrink: 0;
   }
   .input-card input[type="date"] {
     flex: 1;
-    padding: 14px 16px;
+    padding: 14px 12px;
     font-size: 20px;
     font-weight: 900;
     font-family: 'Noto Sans SC', sans-serif;
@@ -94,18 +111,19 @@
     transform: translate(2px, 2px);
   }
 
-  /* ── 结果卡片 ── 主视觉区 */
+  /* ── 结果区域 - 纵向排列 ── */
   .results {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
   .result-card {
     background: #fff;
     border: 4px solid #000;
     box-shadow: 8px 8px 0 #000;
-    padding: 32px 16px 24px;
+    padding: 36px 20px;
     text-align: center;
+    flex: 1;
   }
   .result-card.days {
     background: #FF6B6B;
@@ -117,86 +135,107 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    margin-bottom: 10px;
+    gap: 8px;
+    margin-bottom: 12px;
   }
   .result-card .label-icon {
-    font-size: 26px;
+    font-size: 30px;
     line-height: 1;
   }
   .result-card .label-text {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 900;
-    color: #000;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
   }
   .result-card.days .label-text,
-  .result-card.days .sub,
   .result-card.days .label-icon { color: #fff; text-shadow: 1px 1px 0 rgba(0,0,0,0.15); }
   .result-card.months .label-text,
-  .result-card.months .sub,
   .result-card.months .label-icon { color: #fff; text-shadow: 1px 1px 0 rgba(0,0,0,0.15); }
   .result-card .value {
-    font-size: 68px;
+    font-size: 80px;
     font-weight: 900;
-    color: #fff;
     line-height: 1;
-    letter-spacing: -3px;
+    letter-spacing: -4px;
   }
   .result-card.days .value { color: #fff; }
   .result-card.months .value { color: #fff; }
   .result-card .unit {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 900;
     color: #fff;
-    margin-top: 4px;
+    margin-top: 6px;
     opacity: 0.9;
   }
   .result-card .sub {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
     color: #fff;
-    margin-top: 6px;
+    margin-top: 8px;
     opacity: 0.75;
   }
 
-  /* ── 里程碑 ── 紧凑横向 */
-  .milestone-card {
-    background: #fff;
-    border: 4px solid #000;
-    box-shadow: 8px 8px 0 #000;
-    padding: 16px 14px;
+  /* ── 里程碑 ── */
+  .milestone-row {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px 0;
   }
-  .milestone-card .milestone-tag {
+  .milestone-tag {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    background: #FFE74C;
+    gap: 3px;
+    background: #fff;
     border: 3px solid #000;
     box-shadow: 3px 3px 0 #000;
-    padding: 6px 12px;
-    font-size: 13px;
+    padding: 5px 10px;
+    font-size: 12px;
     font-weight: 900;
     color: #000;
     white-space: nowrap;
   }
-  .milestone-card .milestone-tag.reached {
+  .milestone-tag.reached {
     background: #FF6B6B;
     color: #fff;
   }
 
-  @media (max-width: 400px) {
-    .result-card { padding: 24px 10px 18px; }
-    .result-card .value { font-size: 50px; }
-    .input-card { padding: 14px; gap: 8px; }
-    .input-card input[type="date"] { font-size: 17px; padding: 12px; }
-    .badge { font-size: 13px; padding: 5px 10px; }
-    .milestone-tag { font-size: 11px; padding: 4px 8px; }
+  /* ── 祝福语 ── */
+  .blessing {
+    text-align: center;
+    padding: 8px 0 4px;
+  }
+  .blessing .heart-line {
+    font-size: 24px;
+    letter-spacing: 6px;
+    margin-bottom: 4px;
+  }
+  .blessing .bless-text {
+    font-size: 16px;
+    font-weight: 900;
+    color: #000;
+    letter-spacing: 2px;
+    background: #fff;
+    border: 3px solid #000;
+    box-shadow: 4px 4px 0 #000;
+    display: inline-block;
+    padding: 10px 24px;
+  }
+
+  /* ── 响应式 ── */
+  @media (max-width: 380px) {
+    .result-card { padding: 24px 14px; }
+    .result-card .value { font-size: 56px; }
+    .input-card input[type="date"] { font-size: 17px; padding: 12px 8px; }
+    .input-card .input-label { font-size: 14px; letter-spacing: 1px; }
+    .top-bar { height: 64px; min-height: 64px; }
+    .top-bar .badge { font-size: 17px; }
+    .content { padding: 14px; gap: 12px; }
+  }
+  @media (min-width: 420px) {
+    .result-card { padding: 48px 24px; }
+    .result-card .value { font-size: 96px; }
   }
 </style>
 </head>
@@ -204,42 +243,52 @@
 
 <div class="container">
 
-  <!-- 顶部徽章行 - 极窄 -->
+  <!-- 顶部 80px -->
   <div class="top-bar">
-    <span class="badge pink"><span class="emoji">👶</span> 宝宝天数计算器 <span class="emoji">🍼</span></span>
+    <span class="badge">
+      <span class="emoji">👶</span> 宝宝天数计算器 <span class="emoji">🍼</span>
+    </span>
   </div>
 
-  <!-- 输入区 - 紧凑单行 -->
-  <div class="input-card">
-    <span class="icon-label">📅</span>
-    <input type="date" id="birthdate" max="" placeholder="选择出生日期" />
-  </div>
+  <!-- 内容区 -->
+  <div class="content">
 
-  <!-- 结果区 - 主视觉 -->
-  <div class="results">
-    <div class="result-card days">
-      <div class="label-row">
-        <span class="label-icon">📆</span>
-        <span class="label-text">出生天数</span>
-      </div>
-      <div class="value" id="daysValue">—</div>
-      <div class="unit">天</div>
-      <div class="sub" id="weeksSub"></div>
+    <!-- 输入区 -->
+    <div class="input-card">
+      <span class="input-label">📅 出生日期</span>
+      <input type="date" id="birthdate" max="" />
     </div>
-    <div class="result-card months">
-      <div class="label-row">
-        <span class="label-icon">📏</span>
-        <span class="label-text">宝宝月龄</span>
-      </div>
-      <div class="value" id="monthsValue">—</div>
-      <div class="unit">个月</div>
-      <div class="sub" id="yearMonthSub"></div>
-    </div>
-  </div>
 
-  <!-- 里程碑 - 紧凑标签行 -->
-  <div class="milestone-card" id="milestoneRow">
-    <!-- 动态生成 -->
+    <!-- 结果区 - 纵向 -->
+    <div class="results">
+      <div class="result-card days">
+        <div class="label-row">
+          <span class="label-icon">📆</span>
+          <span class="label-text">出生天数</span>
+        </div>
+        <div class="value" id="daysValue">—</div>
+        <div class="unit">天</div>
+        <div class="sub" id="weeksSub"></div>
+      </div>
+      <div class="result-card months">
+        <div class="label-row">
+          <span class="label-icon">📏</span>
+          <span class="label-text">宝宝月龄</span>
+        </div>
+        <div class="value" id="monthsValue">—</div>
+        <div class="unit">个月</div>
+        <div class="sub" id="yearMonthSub"></div>
+      </div>
+    </div>
+
+    <!-- 里程碑 -->
+    <div class="milestone-row" id="milestoneRow"></div>
+
+    <!-- 祝福语 -->
+    <div class="blessing">
+      <div class="bless-text">💛 祝宝宝健康快乐成长 💛</div>
+    </div>
+
   </div>
 
 </div>
@@ -297,7 +346,11 @@
     daysValue.textContent = daysDiff;
     const weeks = Math.floor(rawDays / 7);
     const remDays = rawDays % 7;
-    weeksSub.textContent = weeks > 0 ? `约 ${weeks} 周 ${remDays} 天` : '今天出生 ✨';
+    if (daysDiff === 1) {
+      weeksSub.textContent = '👋 今天出生 ✨';
+    } else {
+      weeksSub.textContent = weeks > 0 ? `约 ${weeks} 周 ${remDays} 天` : '';
+    }
 
     // 月龄
     const monthDiff = daysDiff / 30.4375;
@@ -322,12 +375,14 @@
   birthdateInput.addEventListener('change', updateDisplay);
   birthdateInput.addEventListener('input', updateDisplay);
 
-  // 恢复上次输入
+  // 自动记忆：优先 localStorage，否则默认 2025-09-29
   const saved = localStorage.getItem('baby_birthdate');
   if (saved) {
     birthdateInput.value = saved;
-    updateDisplay();
+  } else {
+    birthdateInput.value = '2025-09-29';
   }
+  updateDisplay();
 
   birthdateInput.addEventListener('change', () => {
     if (birthdateInput.value) {
@@ -337,8 +392,6 @@
 
   // 每分钟刷新
   setInterval(updateDisplay, 60 * 1000);
-
-  renderMilestones(0);
 })();
 </script>
 </body>
